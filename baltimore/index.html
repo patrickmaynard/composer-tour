@@ -24,38 +24,11 @@ Maybe I'll hack it up a bit later into pieces, the better to recompile with Koal
 That might be all the newfangled stuff that I need this time around (unless we're counting Cordova in that mix - which I plan to do). 
 TODOs:
 - 
-x CREATE SOME ARRAYS OF SAMPLE DATA. INITIAL COMPOSER NAMES AND PICTURES SHOULD BE REAL. 
-x CREATE NEXT/PREV BUTTONS
-x CREATE A SAMPLE MAP IN YOUR JAVASCRIPT (JUST USING MAPQUEST OPEN FOR NOW)
-x MOVE THIS TO A GIST.
-x ABSTRACT THE JSON TO ITS OWN FILE 
-x FIX THE PREV/NEXT BUG THAT NOW EXISTS. 
-x FIX JSON WORKFLOW TO AVOID RANDOM PROBLEMS YOU KEEP HAVING
-x ADD ENOUGH TO YOUR LIVE DATA THAT YOUR FIRST COUPLE SLIDES WILL BE WELL-POPULATED
-x RENAME FIELDS AS NECESSARY IN FUSION TABLES TO MAKE THEM MATCH YOUR FORMAT
-x USE MR DATA CONVERTER TO PLUG IN REAL DATA (FROM WHAT YOU HAVE SO FAR) 
-x ADD MAP FRAME SOURCES TO THE DATA IN YOUR FUSION TABLE.
-x IF NOT ALREADY DONE, FINALIZE THE DATA YOU WANT TO USE, FLAGGING IT IN A COLUMN AS "LIVE" RATHER THAN "DRAFT"
-x ADD AN "ORDER" COLUMN SO WE CAN GET THIS STUFF WHIPPED INTO SHAPE A BIT IN EXCEL.
-x ADD A "DIRECTIONS TO NEXT PLACE" COLUMN IN THE FUSION TABLE.
-x ADD A STUB FUNCTION THAT APPENDS SUPPLEMETAL LINKS/LIGHTBOXES/STUFF/DIRECTIONS TO THE BOTTOM OF THE DESCRIPTION AREA.
-x ADD A fancyBox LIGHTBOX FOR VIDEO
-x Fix mapping
-x Get rid of unneeded mapping columns, which screw with json conversion..
-x Convert any audio to video and upload to YouTube. That will mean the files for Francis Scott Key, Eubie Blake and Rachmaninov
-x Scrap the mp3 field and handler logic
-x Download all existing compimages into an images folder, then change references to avoid breaking json conversion
-x TRY PLUGGIN IN DATA AGAIN VIA EXPORT -> GDOCS -> MR DATA CONVERTER, REMOVING INACTIVES IN THE GDOCS STAGE
-x REMOVE ANY RETURNS IN THE FT DATA, ADDING THEM AUTOMATICALLY AFTER EVERY TWO PERIOD-SPACE COMBINATIONS. 
-x Figure out why the fancybox is not showing up for videos.
-x Figure out why the Hamerik text and others are getting cut off. 
-	x At what stage is this happening? - The Mr Data Converter stage - it doesn't like double quotes. 
-	x How can we prevent it? - Use HTML code instead. That can mean using <em> tags or &lquo; codes, depending on circumstance
-	x Do this for all records, then re-export-import.
-x ADD NEXT-HOP DIRECTIONS TO YOUR getsupplementals FUNCTION.
 x Finish more chatters for non-complete items.
 x Make sure all composers/places are named correctly.
 x Add an image credit to your getsupplementals() function. 
+x Add to github
+x Shorten this TODO list a bit
 - Add credits for FancyBox to your final slide's data. 
 - Add a small bit of animation to transition? 
 - MAKE SURE STUART SAUNDERS SMITH RECORD HAS BEEN UPDATED
@@ -75,9 +48,7 @@ x Add an image credit to your getsupplementals() function.
 - DO RIDICULOUS AMOUNTS OF CROSS-BROWSER TESTING TO MAKE SURE IT RUNS WELL ON OLD FOLKS' DEVICES. THIS IS CLASSICAL MUSIC, AFTER ALL.
 - 
 - WRITE A VERY SIMPLE SERVER-SIDE SCRIPT (MAYBE IN PYTHON OR NODE?) THAT BAKES YOUR CSV TO BOTH A JSON FILE AND A "NOSCRIPT" VERSION OF THE LIST FOR GRACEFUL DEGREDATION.
-- 
-- DO SOME VERSIONING VOODOO TO GET THIS INTO GITHUB OR SOMETHING
-- 
+- - 
 - GET RID OF THIS TODO LIST, replacing it with a readme file.
 - 
 - Wrap output in a cordova-based wrapper, test some more.
