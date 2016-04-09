@@ -1,0 +1,244 @@
+<!DOCTYPE html> <head>
+<title></title>
+<meta charset="utf-8">
+<!-- 
+
+Workflow for content refreshes:
+
+-- Export fusion table as a csv
+-- Open csv in LibreOffice, convert all double quotes to single quotes
+-- Paste resulting grid into Mr. Data Converter
+-- Minify results http://www.httputility.net/json-minifier.aspx to get rid of dangerous chars
+-- Validate results via https://jsonformatter.curiousconcept.com/
+-- Place results into composers.json file, test all slides.
+
+
+
+So I was going to do this in bootstrap.
+But somewhere in the process of installing npm, grunt, bootstrap itself and the sass/less stack needed to compile it ... 
+... I unsurprisingly found myself back in a 2003-style dependency hell. Every bootstrap tut I could find was now obsolete since they had "improved" their workflow so many times, looping in a gratuitous number of auxiliary package managers, unit-testing frameworks, etc.,.
+Let that sink in for a moment. 
+A dependency hell on a vanilla Ubuntu stack for a basic, client-side html project requiring no server-side components. 
+Yeah. Pretty silly. 
+So anyway, I guess I'm building this from scratch as html for now. Whatever. That's more fun anyway. 
+Maybe I'll hack it up a bit later into pieces, the better to recompile with Koala or Jade or something.
+That might be all the newfangled stuff that I need this time around (unless we're counting Cordova in that mix - which I plan to do). 
+TODOs:
+- 
+x CREATE SOME ARRAYS OF SAMPLE DATA. INITIAL COMPOSER NAMES AND PICTURES SHOULD BE REAL. 
+x CREATE NEXT/PREV BUTTONS
+x CREATE A SAMPLE MAP IN YOUR JAVASCRIPT (JUST USING MAPQUEST OPEN FOR NOW)
+x MOVE THIS TO A GIST.
+x ABSTRACT THE JSON TO ITS OWN FILE 
+x FIX THE PREV/NEXT BUG THAT NOW EXISTS. 
+x FIX JSON WORKFLOW TO AVOID RANDOM PROBLEMS YOU KEEP HAVING
+x ADD ENOUGH TO YOUR LIVE DATA THAT YOUR FIRST COUPLE SLIDES WILL BE WELL-POPULATED
+x RENAME FIELDS AS NECESSARY IN FUSION TABLES TO MAKE THEM MATCH YOUR FORMAT
+x USE MR DATA CONVERTER TO PLUG IN REAL DATA (FROM WHAT YOU HAVE SO FAR) 
+x ADD MAP FRAME SOURCES TO THE DATA IN YOUR FUSION TABLE.
+x IF NOT ALREADY DONE, FINALIZE THE DATA YOU WANT TO USE, FLAGGING IT IN A COLUMN AS "LIVE" RATHER THAN "DRAFT"
+x ADD AN "ORDER" COLUMN SO WE CAN GET THIS STUFF WHIPPED INTO SHAPE A BIT IN EXCEL.
+- ADD A "DIRECTIONS TO NEXT PLACE" COLUMN IN THE FUSION TABLE.
+- ADD A FUNCTION THAT APPENDS SUPPLEMETAL LINKS/LIGHTBOXES/STUFF/DIRECTIONS TO THE BOTTOM OF THE DESCRIPTION AREA.
+- REMOVE ANY RETURNS IN THE FT DATA, ADDING THEM AUTOMATICALLY AFTER EVERY TWO PERIOD-SPACE COMBINATIONS. 
+- MAKE SURE STUART SAUNDERS SMITH RECORD HAS BEEN UPDATED
+- MAKE SURE HAMERIK RECORD NOW USES THE HOUSE, RATHER THAN THE HILL
+- TRY PLUGGIN IN DATA AGAIN VIA EXPORT -> GDOCS -> MR DATA CONVERTER, REMOVING INACTIVES IN THE GDOCS STAGE
+-
+-	ADD A BUTTON TO SHOW MP3 OR YOUTUBE CONTENT.
+- 
+- MAKE SURE IMAGE CREDIT LINK IS SHOWN. 
+- 
+-  
+- 
+- IF NOT ALREADY DONE, ADD SCROLLING ON LONG TEXT 
+- 
+- FILL IN ANY REMAINING GAPS IN YOUR FLAGGED-AS-LIVE DATA.
+- 
+- MAKE THE DISPLAY WORK ON TINY SCREEN SIZES
+- 
+- UPGRADE MAPPING TO DO SOMETHIHNG MORE AUTOMATED AND LESS CLUNKY
+- 
+- DO RIDICULOUS AMOUNTS OF CROSS-BROWSER TESTING TO MAKE SURE IT RUNS WELL ON OLD FOLKS' DEVICES. THIS IS CLASSICAL MUSIC, AFTER ALL.
+- 
+- WRITE A VERY SIMPLE SERVER-SIDE SCRIPT (MAYBE IN PYTHON OR NODE?) THAT BAKES YOUR CSV TO BOTH A JSON FILE AND A "NOSCRIPT" VERSION OF THE LIST FOR GRACEFUL DEGREGATION.
+- 
+- DO SOME VERSIONING VOODOO TO GET THIS INTO GITHUB OR SOMETHING
+- 
+- GET RID OF THIS TODO LIST
+-->
+<!-- scrapt src="http://code.jquery.com/jquery-1.11.3.min.js"></scrapt-->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script>
+window.ctour = {};
+window.ctour.init = function(){
+	ctour = window.ctour;
+	$.ajax({
+	    dataType: "json",
+	    url: "composers.json",
+	    mimeType: "application/json",
+	    success: function(data){
+		ctour = window.ctour;
+		window.console.log('The data:');
+		window.console.log(data);
+		ctour.sites = data;
+		},
+	    complete: function(a,b){
+		console.log('Result type from ajax call:');
+		console.log(b);
+		} 
+	}).then(window.ctour.sortslides).then(window.ctour.testhash);
+	window.onhashchange = window.ctour.testhash;
+}
+window.ctour.sortslides = function(){
+	window.ctour.sites = window.ctour.sites.sort(function(a,b){return(a.order - b.order);});
+}
+window.ctour.showslide = function(slidenumber){
+	ctour = window.ctour;
+	var sn = slidenumber;
+	ctour.sites[sn]['compnameshort'] = ctour.sites[sn]['compname'].split(',')[0];
+	var prevlink = (sn-1) in ctour.sites ? ' sn:'+sn+'|<a href="#'+(sn)+'">Previous</a> | ' : '<span>Previous</span> | ';
+	var nextlink = (sn+1) in ctour.sites ? '<a href="#'+(sn+2)+'">Next</a>' : '<span>Next</span>';
+	$('html').css('background-image','url('+ctour.sites[sn]['compimage']+')');
+	$('.compnameshort').html(ctour.sites[sn]['compnameshort']);
+	$('.compname').html(ctour.sites[sn]['compname']);
+    $('.significance').html(""+ctour.sites[sn]['significance']);
+	$('.placename').html(ctour.sites[sn]['placename']);
+	$('.placerelation').html(ctour.sites[sn]['placerelation']);
+	$('.description').html(ctour.sites[sn]['description']); 
+	$('.slidenav').html(prevlink+nextlink);
+	$('iframe#map').attr('src',ctour.sites[sn]['mapframesource']);
+	console.log('all done.');
+}
+window.ctour.testhash = function(){
+		console.log('testing hash ...');
+		cleanhash = parseInt(window.location.hash.replace('#','')) - 1;
+		console.log('Hash is ...');
+		console.log(cleanhash);
+		console.log('Type of our attempted object should be "object" and is ... ');
+		if(typeof($(ctour.sites)[(cleanhash)]) == 'object'){
+			ctour.showslide(cleanhash);  
+		}
+}
+$(function(){
+	ctour.init();
+	window.ctour.testhash();
+});
+
+</script>
+<style>
+html {
+	background-color: #FFF;
+	background-repeat: no-repeat;
+	background-size: 300%;
+	background-position: 0px -500px;
+	overflow:hidden;
+}
+body {
+	height:110%;
+	width:100%;
+	background-color:#cccccc;
+	opacity:.9;
+	position:absolute;
+	bottom:-10px;
+	margin:0px;
+}
+h2{
+	font-family:sans-serif; 
+	text-transform:uppercase; 
+	font-size:300px; 
+	line-height:180px; 
+	position:relative; 
+	top:450px; 
+	left:-50px;
+	color:#990000; 
+	opacity:.2;
+	transform: rotate(270deg);
+	height:1px;
+	width:1px;
+	overflow:visible;
+}
+h1{
+	font-family:sans-serif; 
+	text-transform:uppercase; 
+	position:absolute;
+	top:60px;
+	font-size:100px; 
+	line-height:70px; 
+	color:#990000; 
+	opacity:.8;
+	height:1px;
+	width:1px;
+	overflow:visible;
+}
+.placename, .placerelation{
+    min-height:45px;
+}
+article{
+	position:absolute;
+	bottom:0px;
+	right:0px;
+	width:50%;
+	padding:30px;
+	background:#ffffff;
+}
+section.slidenav{
+	margin-top:20px;
+	margin-right:20px;
+	float:right;
+}
+section.slidenav span{
+	/*This is a grayed-out nav option.*/
+	color:#cccccc;
+}
+iframe#map{
+	border:1px #cccccc solid;
+	float:right;
+}
+.description{
+    height:200px;
+    overflow-y:scroll; 
+}
+@media (max-width: 2000px){
+ html {
+	background-size: cover;
+ }
+}
+@media (max-width: 1600px){
+ html {
+	background-size: 180%;
+ }
+}
+@media (max-width: 100px){
+ html {
+	background-size: 90%;
+ }
+}
+
+
+</style>
+</head>
+<body>
+<h1 class="compnameshort">Person name</h1>
+<h2 class="compnameshort">Person name</h2>
+<article>
+<section id="map">
+<iframe id="map" style="height: 180px; width: 180px;" src="" marginwidth="0" marginheight="0" frameborder="0" scrolling="no"></iframe>
+</section>
+<h3 id="placename" class="placename">xxxx</h3>
+<section id="compname">
+<h4>Composer</h4>
+<p class="compname">xxxxx</p>
+</section>
+<section id="placerelation">
+<h4>Significance</h4>
+<p class="placerelation">xxxxx<p>
+</section>
+<section class="description">
+Some text and such goes here and describes a bit of stuff. Also a map. This will be the meat and potatoes of the description. It may require some scrolling to see everything. Try to test this very early on mobile with tons and tons and tons of text so that we know everything works well. 
+</section>
+<section class="slidenav">
+</section>
+</article>
+</body>
+</html>
