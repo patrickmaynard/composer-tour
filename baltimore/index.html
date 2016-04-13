@@ -29,21 +29,22 @@ x Make sure all composers/places are named correctly.
 x Add an image credit to your getsupplementals() function. 
 x Add to github
 x Shorten this TODO list a bit
-- Add credits for FancyBox to your final slide's data. 
-- Add a small bit of animation to transition? 
-- MAKE SURE STUART SAUNDERS SMITH RECORD HAS BEEN UPDATED
-- MAKE SURE HAMERIK RECORD NOW USES THE HOUSE, RATHER THAN THE HILL
-- TRY PLUGGIN IN DATA AGAIN VIA EXPORT -> GDOCS -> MR DATA CONVERTER, REMOVING INACTIVES IN THE GDOCS STAGE 
+x Add credits for FancyBox to your final slide's data. 
+x MAKE SURE STUART SAUNDERS SMITH RECORD HAS BEEN UPDATED
+x MAKE SURE HAMERIK RECORD NOW USES THE HOUSE, RATHER THAN THE HILL
+x TRY PLUGGIN IN DATA AGAIN VIA EXPORT -> GDOCS -> MR DATA CONVERTER, REMOVING INACTIVES IN THE GDOCS STAGE 
+x UPGRADE MAPPING TO DO SOMETHIHNG MORE AUTOMATED AND LESS CLUNKY 
+x Fix the background-image overlap problem
 - 
-- MAKE SURE IMAGE CREDIT LINK IS SHOWN. 
+- Make the display work on tiny screen sizes.
 - 
-- FILL IN ANY REMAINING GAPS IN YOUR FLAGGED-AS-LIVE DATA.
+- Add a small bit of animation to transition?
 - 
-- Fix the background-image overlap problem - probably by explicitly assigning height and width to your body and html elements.  
+- Take your own pictures for all background images.
 - 
-- MAKE THE DISPLAY WORK ON TINY SCREEN SIZES
+- Once your own images have been subbed in, get rid of background image credit logic.
 - 
-- UPGRADE MAPPING TO DO SOMETHIHNG MORE AUTOMATED AND LESS CLUNKY
+- Add a connection check in the first screen that tells some people "the tour will still work, but some links won't because you're not connected to the Internet."i
 - 
 - DO RIDICULOUS AMOUNTS OF CROSS-BROWSER TESTING TO MAKE SURE IT RUNS WELL ON OLD FOLKS' DEVICES. THIS IS CLASSICAL MUSIC, AFTER ALL.
 - 
@@ -167,8 +168,9 @@ body {
 	background-color:#cccccc;
 	opacity:.95;
 	position:absolute;
-	bottom:-10px;
+	bottom:0px;
 	margin:0px;
+	overflow:hidden;
 }
 h2{
 	font-family:sans-serif; 
