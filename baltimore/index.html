@@ -35,15 +35,21 @@ x MAKE SURE HAMERIK RECORD NOW USES THE HOUSE, RATHER THAN THE HILL
 x TRY PLUGGIN IN DATA AGAIN VIA EXPORT -> GDOCS -> MR DATA CONVERTER, REMOVING INACTIVES IN THE GDOCS STAGE 
 x UPGRADE MAPPING TO DO SOMETHIHNG MORE AUTOMATED AND LESS CLUNKY 
 x Fix the background-image overlap problem
+x Briefly create an internal fork to explore the idea of using an image rather than a background. That will allow filters. http://alistapart.com/article/finessing-fecolormatrix
+x Success! Merge the fork. 
+-
+- I like this image so much that I don't need any others. Credit it at the end. 
+- 
+- Now get rid of the image credit logic/field. 
+- 
+- Also get rid of the logic that subs in background images, since those aren't needed now. 
+- 
+- Get rid of anything in the "backgrounds" folder other than the crabs.
 - 
 - Make the display work on tiny screen sizes.
 - 
 - Add a small bit of animation to transition?
-- 
-- Take your own pictures for all background images.
-- 
-- Once your own images have been subbed in, get rid of background image credit logic.
-- 
+-  
 - Add a connection check in the first screen that tells some people "the tour will still work, but some links won't because you're not connected to the Internet."i
 - 
 - DO RIDICULOUS AMOUNTS OF CROSS-BROWSER TESTING TO MAKE SURE IT RUNS WELL ON OLD FOLKS' DEVICES. THIS IS CLASSICAL MUSIC, AFTER ALL.
@@ -166,7 +172,6 @@ body {
 	height:110%;
 	width:100%;
 	background-color:#cccccc;
-	opacity:.95;
 	position:absolute;
 	bottom:0px;
 	margin:0px;
@@ -178,9 +183,9 @@ h2{
 	font-size:300px; 
 	line-height:180px; 
 	position:relative; 
-	top:450px; 
+	top:300px; 
 	left:-50px;
-	color:#990000; 
+	color:#ffffff; 
 	opacity:.2;
 	transform: rotate(270deg);
 	height:1px;
@@ -192,12 +197,17 @@ h1{
 	text-transform:uppercase; 
 	position:absolute;
 	top:60px;
-	font-size:100px; 
+	font-size:6vw; 
 	line-height:70px; 
-	color:#990000; 
+	color:#ffffff; 
 	opacity:.8;
 	height:1px;
 	width:1px;
+	overflow:visible;
+}
+picture{
+	height:1px;
+	width:1px; 
 	overflow:visible;
 }
 .placename, .placerelation{
@@ -207,9 +217,10 @@ article{
 	position:absolute;
 	bottom:0px;
 	right:0px;
-	width:50%;
+	width:45vw;
 	padding:30px;
 	background:#ffffff;
+	min-height:60vh;
 }
 section.slidenav{
 	margin-top:20px;
@@ -244,30 +255,50 @@ iframe#map{
  }
 }
 
-
+img.filterme{
+	min-height: 110vh;
+	min-width: 110vw;
+	filter: url('#bluetint');
+}
 </style>
+
+<svg style="height:1px;">
+	<filter id="bluetint">
+	 <feColorMatrix
+			 type="matrix"
+					 values="0   0   0   0   0
+									 0   0   0   0   0
+									 0   0   .5   0   0
+									 0   0   0   .9   0 "/>
+	</filter>
+</svg>
+
+
 </head>
 <body>
-<h1 class="compnameshort">Person name</h1>
-<h2 class="compnameshort">Person name</h2>
-<article>
-<section id="map">
-<iframe id="map" style="height: 180px; width: 180px;" src="" marginwidth="0" marginheight="0" frameborder="0" scrolling="no"></iframe>
-</section>
-<h3 id="placename" class="placename">Intro</h3>
-<section id="compname">
-<h4>Composer</h4>
-<p class="compname">Intro</p>
-</section>
-<section id="placerelation">
-<h4>Significance</h4>
-<p class="placerelation">Intro<p>
-</section>
-<section class="description">
-Welcome to the Baltimore composer walking tour, which shows visitors sites of importance in Baltimore's musical history. This tour is for the most part confined to the area between the midtown and downtown neighborhoods, in order to avoid making visitors walk too far. This tour requires javascript. If you are seeing this message on the tour page, please turn on javascript. 
-</section>
-<section class="slidenav">
-</section>
-</article>
+	<picture>
+	<img class="filterme" src="backgrounds/Crabs_at_Maine_Avenue_Fish_Market.jpg"> 
+	</picture>
+	<h1 class="compnameshort">Person name</h1>
+	<h2 class="compnameshort">Person name</h2>
+	<article>
+		<section id="map">
+			<iframe id="map" style="height: 180px; width: 180px;" src="" marginwidth="0" marginheight="0" frameborder="0" scrolling="no"></iframe>
+		</section>
+		<h3 id="placename" class="placename">Intro</h3>
+		<section id="compname">
+			<h4>Composer</h4>
+			<p class="compname">Intro</p>
+		</section>
+		<section id="placerelation">
+			<h4>Significance</h4>
+			<p class="placerelation">Intro<p>
+		</section>
+		<section class="description">
+			Welcome to the Baltimore composer walking tour, which shows visitors sites of importance in Baltimore's musical history. This tour is for the most part confined to the area between the midtown and downtown neighborhoods, in order to avoid making visitors walk too far. This tour requires javascript. If you are seeing this message on the tour page, please turn on javascript. 
+		</section>
+		<section class="slidenav">
+		</section>
+	</article>
 </body>
 </html>

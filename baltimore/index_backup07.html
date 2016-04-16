@@ -12,10 +12,9 @@ Workflow for content refreshes:
 -- Validate results via https://jsonformatter.curiousconcept.com/
 -- Place results into composers.json file, test all slides.
 
-
-
 So I was going to do this in bootstrap.
 But somewhere in the process of installing npm, grunt, bootstrap itself and the sass/less stack needed to compile it ... 
+
 ... I unsurprisingly found myself back in a 2003-style dependency hell. Every bootstrap tut I could find was now obsolete since they had "improved" their workflow so many times, looping in a gratuitous number of auxiliary package managers, unit-testing frameworks, etc.,.
 Let that sink in for a moment. 
 A dependency hell on a vanilla Ubuntu stack for a basic, client-side html project requiring no server-side components. 
@@ -25,55 +24,42 @@ Maybe I'll hack it up a bit later into pieces, the better to recompile with Koal
 That might be all the newfangled stuff that I need this time around (unless we're counting Cordova in that mix - which I plan to do). 
 TODOs:
 - 
-x CREATE SOME ARRAYS OF SAMPLE DATA. INITIAL COMPOSER NAMES AND PICTURES SHOULD BE REAL. 
-x CREATE NEXT/PREV BUTTONS
-x CREATE A SAMPLE MAP IN YOUR JAVASCRIPT (JUST USING MAPQUEST OPEN FOR NOW)
-x MOVE THIS TO A GIST.
-x ABSTRACT THE JSON TO ITS OWN FILE 
-x FIX THE PREV/NEXT BUG THAT NOW EXISTS. 
-x FIX JSON WORKFLOW TO AVOID RANDOM PROBLEMS YOU KEEP HAVING
-x ADD ENOUGH TO YOUR LIVE DATA THAT YOUR FIRST COUPLE SLIDES WILL BE WELL-POPULATED
-x RENAME FIELDS AS NECESSARY IN FUSION TABLES TO MAKE THEM MATCH YOUR FORMAT
-x USE MR DATA CONVERTER TO PLUG IN REAL DATA (FROM WHAT YOU HAVE SO FAR) 
-x ADD MAP FRAME SOURCES TO THE DATA IN YOUR FUSION TABLE.
-x IF NOT ALREADY DONE, FINALIZE THE DATA YOU WANT TO USE, FLAGGING IT IN A COLUMN AS "LIVE" RATHER THAN "DRAFT"
-x ADD AN "ORDER" COLUMN SO WE CAN GET THIS STUFF WHIPPED INTO SHAPE A BIT IN EXCEL.
-x ADD A "DIRECTIONS TO NEXT PLACE" COLUMN IN THE FUSION TABLE.
-x ADD A STUB FUNCTION THAT APPENDS SUPPLEMETAL LINKS/LIGHTBOXES/STUFF/DIRECTIONS TO THE BOTTOM OF THE DESCRIPTION AREA.
-x ADD A fancyBox LIGHTBOX FOR VIDEO
-x Fix mapping
-x Get rid of unneeded mapping columns, which screw with json conversion..
-x Convert any audio to video and upload to YouTube. That will mean the files for Francis Scott Key, Eubie Blake and Rachmaninov
-x Scrap the mp3 field and handler logic
-- Download all existing compimages into an images folder, then change references to avoid breaking json conversion
-- TRY PLUGGIN IN DATA AGAIN VIA EXPORT -> GDOCS -> MR DATA CONVERTER, REMOVING INACTIVES IN THE GDOCS STAGE
-- ADD NEXT-HOP DIRECTIONS TO YOUR getsupplementals FUNCTION.
-- Figure out why the fancybox is not showing up.
-- Add credits for images and FancyBox to your final slide's data. Also include info on how to see YouTube chatter by clicking the "YouTube" button on each video.
-- REMOVE ANY RETURNS IN THE FT DATA, ADDING THEM AUTOMATICALLY AFTER EVERY TWO PERIOD-SPACE COMBINATIONS. 
-- MAKE SURE STUART SAUNDERS SMITH RECORD HAS BEEN UPDATED
-- MAKE SURE HAMERIK RECORD NOW USES THE HOUSE, RATHER THAN THE HILL
-- TRY PLUGGIN IN DATA AGAIN VIA EXPORT -> GDOCS -> MR DATA CONVERTER, REMOVING INACTIVES IN THE GDOCS STAGE
+x Finish more chatters for non-complete items.
+x Make sure all composers/places are named correctly.
+x Add an image credit to your getsupplementals() function. 
+x Add to github
+x Shorten this TODO list a bit
+x Add credits for FancyBox to your final slide's data. 
+x MAKE SURE STUART SAUNDERS SMITH RECORD HAS BEEN UPDATED
+x MAKE SURE HAMERIK RECORD NOW USES THE HOUSE, RATHER THAN THE HILL
+x TRY PLUGGIN IN DATA AGAIN VIA EXPORT -> GDOCS -> MR DATA CONVERTER, REMOVING INACTIVES IN THE GDOCS STAGE 
+x UPGRADE MAPPING TO DO SOMETHIHNG MORE AUTOMATED AND LESS CLUNKY 
+x Fix the background-image overlap problem
 -
+- Briefly create an internal fork to explore the idea of using an image rather than a background. That will allow filters. http://alistapart.com/article/finessing-fecolormatrix
 - 
+- Make the display work on tiny screen sizes.
 - 
-- MAKE SURE IMAGE CREDIT LINK IS SHOWN. 
+- Add a small bit of animation to transition?
 - 
-- IF NOT ALREADY DONE, MAKE MAPPING WORK! CONSIDER USING A STATIC IMAGE IF NEEDED.   
+- Take your own pictures for all background images.
 - 
-- FILL IN ANY REMAINING GAPS IN YOUR FLAGGED-AS-LIVE DATA.
+- Once your own images have been subbed in, get rid of background image credit logic.
 - 
-- MAKE THE DISPLAY WORK ON TINY SCREEN SIZES
-- 
-- UPGRADE MAPPING TO DO SOMETHIHNG MORE AUTOMATED AND LESS CLUNKY
+- Add a connection check in the first screen that tells some people "the tour will still work, but some links won't because you're not connected to the Internet."i
 - 
 - DO RIDICULOUS AMOUNTS OF CROSS-BROWSER TESTING TO MAKE SURE IT RUNS WELL ON OLD FOLKS' DEVICES. THIS IS CLASSICAL MUSIC, AFTER ALL.
 - 
 - WRITE A VERY SIMPLE SERVER-SIDE SCRIPT (MAYBE IN PYTHON OR NODE?) THAT BAKES YOUR CSV TO BOTH A JSON FILE AND A "NOSCRIPT" VERSION OF THE LIST FOR GRACEFUL DEGREDATION.
+- - 
+- GET RID OF THIS TODO LIST, replacing it with a readme file.
 - 
-- DO SOME VERSIONING VOODOO TO GET THIS INTO GITHUB OR SOMETHING
+- Wrap output in a cordova-based wrapper, test some more.
+-
+- Using a bootstrap template, create a super-simple composertours.org site that points users at the app. 
+-  
+- Release into the world, distributing simple flyers advertising the tour.
 - 
-- GET RID OF THIS TODO LIST
 -->
 <!-- scrapt src="http://code.jquery.com/jquery-1.11.3.min.js"></scrapt-->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -108,13 +94,14 @@ window.ctour.sortslides = function(){
 window.ctour.getsupplementals = function(sn){
 	var output = "";
 	if(ctour.sites[sn]['youtube'] != ""){
-		output += '<br><a class="fancybox fancybox.iframe" href="http://www.youtube.com/embed/XgO5sWTMb58?enablejsapi=1&wmode=opaque">Video #1</a>';
-		output += '<br><a class="video" target="_blank" href="'+ctour.sites[sn]['youtube']+'">View video</a>';
+		output += '<br><br><a class="fancybox fancybox.iframe" href="http://www.youtube.com/embed/'+ctour.sites[sn]['youtube']+'?enablejsapi=1&wmode=opaque">View video</a>';
 	}
-	output += "<br><strong>Item two</strong>: Content - this is a stub.";
-	output += "<br><strong>Item three</strong>: Content - this is a stub.";
-	output += "<br><strong>Item four</strong>: Content - this is a stub.";
-	//console.log('sup.');
+	if(ctour.sites[sn]['imagedescription'] != ""){
+		output += '<br><br><strong>Background image credit:</strong> '+ctour.sites[sn]['imagedescription']+'';
+	}
+	if(ctour.sites[sn]['nextdirections'] != ""){
+		output += '<br><br><strong>Directions to next stop:</strong> '+ctour.sites[sn]['nextdirections']+'';
+	}
 	return(output);
 }
 window.ctour.showslide = function(slidenumber){
@@ -157,8 +144,13 @@ window.ctour.testhash = function(){
 	}
 }
 $(function(){
-	ctour.init();
-	window.ctour.testhash();
+	//ctour.init();
+	//window.ctour.testhash();
+	$.when(ctour.init()).then(function(){
+		setTimeout(function(){
+			window.ctour.testhash();
+		},500);
+	});
 });
 
 </script>
@@ -176,10 +168,11 @@ body {
 	height:110%;
 	width:100%;
 	background-color:#cccccc;
-	opacity:.9;
+	opacity:.95;
 	position:absolute;
-	bottom:-10px;
+	bottom:0px;
 	margin:0px;
+	overflow:hidden;
 }
 h2{
 	font-family:sans-serif; 
