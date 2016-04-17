@@ -3,65 +3,24 @@
 <meta charset="utf-8">
 <!-- 
 
-Workflow for content refreshes:
-
--- Export fusion table as a csv
--- Open csv in LibreOffice, convert all double quotes to single quotes
--- Paste resulting grid into Mr. Data Converter
--- Minify results http://www.httputility.net/json-minifier.aspx to get rid of dangerous chars
--- Validate results via https://jsonformatter.curiousconcept.com/
--- Place results into composers.json file, test all slides.
-
-So I was going to do this in bootstrap.
-But somewhere in the process of installing npm, grunt, bootstrap itself and the sass/less stack needed to compile it ... 
-
-... I unsurprisingly found myself back in a 2003-style dependency hell. Every bootstrap tut I could find was now obsolete since they had "improved" their workflow so many times, looping in a gratuitous number of auxiliary package managers, unit-testing frameworks, etc.,.
-Let that sink in for a moment. 
-A dependency hell on a vanilla Ubuntu stack for a basic, client-side html project requiring no server-side components. 
-Yeah. Pretty silly. 
-So anyway, I guess I'm building this from scratch as html for now. Whatever. That's more fun anyway. 
-Maybe I'll hack it up a bit later into pieces, the better to recompile with Koala or Jade or something.
-That might be all the newfangled stuff that I need this time around (unless we're counting Cordova in that mix - which I plan to do). 
-TODOs:
-- 
-x Finish more chatters for non-complete items.
-x Make sure all composers/places are named correctly.
-x Add an image credit to your getsupplementals() function. 
-x Add to github
-x Shorten this TODO list a bit
-x Add credits for FancyBox to your final slide's data. 
-x MAKE SURE STUART SAUNDERS SMITH RECORD HAS BEEN UPDATED
-x MAKE SURE HAMERIK RECORD NOW USES THE HOUSE, RATHER THAN THE HILL
-x TRY PLUGGIN IN DATA AGAIN VIA EXPORT -> GDOCS -> MR DATA CONVERTER, REMOVING INACTIVES IN THE GDOCS STAGE 
-x UPGRADE MAPPING TO DO SOMETHIHNG MORE AUTOMATED AND LESS CLUNKY 
-x Fix the background-image overlap problem
+Remaining TODO items:
 x Briefly create an internal fork to explore the idea of using an image rather than a background. That will allow filters. http://alistapart.com/article/finessing-fecolormatrix
 x Success! Merge the fork. 
--
-- I like this image so much that I don't need any others. Credit it at the end. 
-- 
-- Now get rid of the image credit logic/field. 
-- 
-- Also get rid of the logic that subs in background images, since those aren't needed now. 
-- 
-- Get rid of anything in the "backgrounds" folder other than the crabs.
-- 
-- Make the display work on tiny screen sizes.
-- 
+x I like this image so much that I don't need any others. xredit it at the end.  
+x Re-run the EXPORT > GDOCS > MR DATA CONVERTER  workflow, removing inactives at the GDOCs stage. Make sure the image credit is live.  
+x Now get rid of the imagxxcredit logic/field. 
+x Also get rid of the logic that subs in background images, since those aren't needed now. 
+x Get rid of anything in the "backgrounds" folder other than the crabs.
+x Make the display work on tiny screen sizes.
+x Remove the sn counter from the interface.
+- Abstract all javascript and styles to their own files.
 - Add a small bit of animation to transition?
--  
 - Add a connection check in the first screen that tells some people "the tour will still work, but some links won't because you're not connected to the Internet."i
-- 
 - DO RIDICULOUS AMOUNTS OF CROSS-BROWSER TESTING TO MAKE SURE IT RUNS WELL ON OLD FOLKS' DEVICES. THIS IS CLASSICAL MUSIC, AFTER ALL.
-- 
 - WRITE A VERY SIMPLE SERVER-SIDE SCRIPT (MAYBE IN PYTHON OR NODE?) THAT BAKES YOUR CSV TO BOTH A JSON FILE AND A "NOSCRIPT" VERSION OF THE LIST FOR GRACEFUL DEGREDATION.
-- - 
 - GET RID OF THIS TODO LIST, replacing it with a readme file.
-- 
 - Wrap output in a cordova-based wrapper, test some more.
--
 - Using a bootstrap template, create a super-simple composertours.org site that points users at the app. 
--  
 - Release into the world, distributing simple flyers advertising the tour.
 - 
 -->
@@ -100,9 +59,6 @@ window.ctour.getsupplementals = function(sn){
 	if(ctour.sites[sn]['youtube'] != ""){
 		output += '<br><br><a class="fancybox fancybox.iframe" href="http://www.youtube.com/embed/'+ctour.sites[sn]['youtube']+'?enablejsapi=1&wmode=opaque">View video</a>';
 	}
-	if(ctour.sites[sn]['imagedescription'] != ""){
-		output += '<br><br><strong>Background image credit:</strong> '+ctour.sites[sn]['imagedescription']+'';
-	}
 	if(ctour.sites[sn]['nextdirections'] != ""){
 		output += '<br><br><strong>Directions to next stop:</strong> '+ctour.sites[sn]['nextdirections']+'';
 	}
@@ -112,9 +68,8 @@ window.ctour.showslide = function(slidenumber){
 	ctour = window.ctour;
 	var sn = slidenumber;
 	ctour.sites[sn]['compnameshort'] = ctour.sites[sn]['compname'].split(',')[0];
-	var prevlink = (sn-1) in ctour.sites ? ' sn:'+sn+'|<a href="#'+(sn)+'">Previous</a> | ' : '<span>Previous</span> | ';
+	var prevlink = (sn-1) in ctour.sites ? '<a href="#'+(sn)+'">Previous</a> | ' : '<span>Previous</span> | ';
 	var nextlink = (sn+1) in ctour.sites ? '<a href="#'+(sn+2)+'">Next</a>' : '<span>Next</span>';
-	$('html').css('background-image','url('+ctour.sites[sn]['compimage']+')');
 	$('.compnameshort').html(ctour.sites[sn]['compnameshort']);
 	$('.compname').html(ctour.sites[sn]['compname']);
     $('.significance').html(""+ctour.sites[sn]['significance']);
@@ -162,10 +117,6 @@ $(function(){
 <link rel="stylesheet" type="text/css" href="fancyplayer.css">
 <style>
 html {
-	background-color: #FFF;
-	background-repeat: no-repeat;
-	background-size: 300%;
-	background-position: 0px -500px;
 	overflow:hidden;
 }
 body {
@@ -183,10 +134,10 @@ h2{
 	font-size:300px; 
 	line-height:180px; 
 	position:relative; 
-	top:300px; 
-	left:-50px;
+	top:0px; 
+	left:0px;
 	color:#ffffff; 
-	opacity:.2;
+	opacity:.1;
 	transform: rotate(270deg);
 	height:1px;
 	width:1px;
@@ -239,27 +190,74 @@ iframe#map{
     height:200px;
     overflow-y:auto; 
 }
-@media (max-width: 2000px){
- html {
-	background-size: cover;
- }
+section#map iframe{
+	height:185px;
+	width:185px;
 }
-@media (max-width: 1600px){
- html {
-	background-size: 180%;
- }
-}
-@media (max-width: 100px){
- html {
-	background-size: 90%;
- }
-}
-
 img.filterme{
 	min-height: 110vh;
 	min-width: 110vw;
 	filter: url('#bluetint');
 }
+@media (max-width: 600px){
+html {
+	overflow:auto;
+	width:100vw;
+}
+body {
+	height:100%;
+	width:100%;
+	background-color:#ffffff;
+	position:auto;
+	bottom:auto;
+	margin:auto;
+	overflow:auto;
+	overflow-x:hidden;
+}
+ article {
+	width:100%;
+	left:0px;
+	top:0px;
+	position:absolute;
+	padding:50px;
+	height:auto;
+ }
+ section{
+	max-width:85%; 
+	margin-right:100px;
+ }
+ section#placerelation{
+	border-bottom:1px dotted #cccccc;
+	margin-bottom:30px;
+ }
+ section.slidenav{
+	float:left; 
+	margin-bottom:60px;
+ }
+ section.description{
+	height:auto;
+	background:#ffffff;
+ }
+ section#map{
+	 position: relative;
+	 top: -50px;
+	 left: -50px;
+	 width: 100vw;
+	 height: 185px;
+	 clear: both;
+	 display: block; 
+	 max-width:unset;
+ }
+ section#map iframe{
+	 height: 180px;
+	 width: 100vw;
+	 overflow: auto; 
+ }
+ picture{
+	display:none; 
+ }
+}
+
 </style>
 
 <svg style="height:1px;">
@@ -283,7 +281,7 @@ img.filterme{
 	<h2 class="compnameshort">Person name</h2>
 	<article>
 		<section id="map">
-			<iframe id="map" style="height: 180px; width: 180px;" src="" marginwidth="0" marginheight="0" frameborder="0" scrolling="no"></iframe>
+			<iframe id="map" src="" marginwidth="0" marginheight="0" frameborder="0" scrolling="no"></iframe>
 		</section>
 		<h3 id="placename" class="placename">Intro</h3>
 		<section id="compname">
