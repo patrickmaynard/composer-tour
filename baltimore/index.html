@@ -13,9 +13,11 @@ x Also get rid of the logic that subs in background images, since those aren't n
 x Get rid of anything in the "backgrounds" folder other than the crabs.
 x Make the display work on tiny screen sizes.
 x Remove the sn counter from the interface.
+- Fix bug that causes Safari not to load slides.
 - Abstract all javascript and styles to their own files.
 - Add a small bit of animation to transition?
 - Add a connection check in the first screen that tells some people "the tour will still work, but some links won't because you're not connected to the Internet."i
+- Push this to a github.io site for testing purposes.
 - DO RIDICULOUS AMOUNTS OF CROSS-BROWSER TESTING TO MAKE SURE IT RUNS WELL ON OLD FOLKS' DEVICES. THIS IS CLASSICAL MUSIC, AFTER ALL.
 - WRITE A VERY SIMPLE SERVER-SIDE SCRIPT (MAYBE IN PYTHON OR NODE?) THAT BAKES YOUR CSV TO BOTH A JSON FILE AND A "NOSCRIPT" VERSION OF THE LIST FOR GRACEFUL DEGREDATION.
 - GET RID OF THIS TODO LIST, replacing it with a readme file.
@@ -199,7 +201,7 @@ img.filterme{
 	min-width: 110vw;
 	filter: url('#bluetint');
 }
-@media (max-width: 600px){
+@media (max-width: 800px){
 html {
 	overflow:auto;
 	width:100vw;
