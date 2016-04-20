@@ -116,6 +116,20 @@ $(function(){
 });
 
 </script>
+
+<svg style="height:1px;">
+<defs>
+	<filter id="bluetint">
+	 <feColorMatrix
+			 type="matrix"
+					 values="0   0   0   0   0
+									 0   0   0   0   0
+									 0   0   1   0   0
+									 0   0   0   1   0 "/>
+	</filter>
+	</defs>
+</svg>
+
 <link rel="stylesheet" type="text/css" href="bower_components/fancybox/source/jquery.fancybox.css">
 <link rel="stylesheet" type="text/css" href="fancyplayer.css">
 <style>
@@ -262,20 +276,6 @@ body {
 }
 
 </style>
-
-<svg style="height:1px;">
-<defs>
-	<filter id="bluetint">
-	 <feColorMatrix
-			 type="matrix"
-					 values="0   0   0   0   0
-									 0   0   0   0   0
-									 0   0   1   0   0
-									 0   0   0   1   0 "/>
-	</filter>
-	</defs>
-</svg>
-
 
 </head>
 <body>
