@@ -14,12 +14,11 @@ x Get rid of anything in the "backgrounds" folder other than the crabs.
 x Make the display work on tiny screen sizes.
 x Remove the sn counter from the interface.
 x Fix bug that causes Safari not to load slides.
-- Fix bug that causes Chrome to miss the color filter.
-- Abstract all javascript and styles to their own files.
-- Add a small bit of animation to transition?
-- Add a connection check in the first screen that tells some people "the tour will still work, but some links won't because you're not connected to the Internet."i
-- Push this to a github.io site for testing purposes.
-- DO RIDICULOUS AMOUNTS OF CROSS-BROWSER TESTING TO MAKE SURE IT RUNS WELL ON OLD FOLKS' DEVICES. THIS IS CLASSICAL MUSIC, AFTER ALL.
+x Fix bug that causes Chrome to miss the color filter.
+x Abstract all javascript and styles to their own files.
+x Add a small bit of animation to transition?
+x Push this to a github.io site for testing purposes.
+- More cross-browser testing at UB on IE. 
 - WRITE A VERY SIMPLE SERVER-SIDE SCRIPT (MAYBE IN PYTHON OR NODE?) THAT BAKES YOUR CSV TO BOTH A JSON FILE AND A "NOSCRIPT" VERSION OF THE LIST FOR GRACEFUL DEGREDATION.
 - GET RID OF THIS TODO LIST, replacing it with a readme file.
 - Wrap output in a cordova-based wrapper, test some more.
@@ -33,89 +32,7 @@ x Fix bug that causes Safari not to load slides.
 <!-- YouTube and FancyBox code adapted from http://jsfiddle.net/M78zz/ via http://fancyapps.com/fancybox/-->
 <script src="http://www.youtube.com/player_api"></script>
 <script src="fancyplayer.js"></script>
-<script>
-window.ctour = {};
-window.ctour.init = function(){
-	ctour = window.ctour;
-	$.ajax({
-	    dataType: "json",
-	    url: "composers.json",
-	    mimeType: "application/json",
-	    success: function(data){
-		ctour = window.ctour;
-		//window.console.log('The data:');
-		//window.console.log(data);
-		ctour.sites = data;
-		},
-	    complete: function(a,b){
-		//console.log('Result type from ajax call:');
-		//console.log(b);
-		} 
-	}).then(window.ctour.sortslides).then(window.ctour.testhash);
-	window.onhashchange = window.ctour.testhash;
-}
-window.ctour.sortslides = function(){
-	window.ctour.sites = window.ctour.sites.sort(function(a,b){return(a.order - b.order);});
-}
-window.ctour.getsupplementals = function(sn){
-	var output = "";
-	if(ctour.sites[sn]['youtube'] != ""){
-		output += '<br><br><a class="fancybox fancybox.iframe" href="http://www.youtube.com/embed/'+ctour.sites[sn]['youtube']+'?enablejsapi=1&wmode=opaque">View video</a>';
-	}
-	if(ctour.sites[sn]['nextdirections'] != ""){
-		output += '<br><br><strong>Directions to next stop:</strong> '+ctour.sites[sn]['nextdirections']+'';
-	}
-	return(output);
-}
-window.ctour.showslide = function(slidenumber){
-	ctour = window.ctour;
-	var sn = slidenumber;
-	ctour.sites[sn]['compnameshort'] = ctour.sites[sn]['compname'].split(',')[0];
-	var prevlink = (sn-1) in ctour.sites ? '<a href="#'+(sn)+'">Previous</a> | ' : '<span>Previous</span> | ';
-	var nextlink = (sn+1) in ctour.sites ? '<a href="#'+(sn+2)+'">Next</a>' : '<span>Next</span>';
-	$('.compnameshort').html(ctour.sites[sn]['compnameshort']);
-	$('.compname').html(ctour.sites[sn]['compname']);
-    $('.significance').html(""+ctour.sites[sn]['significance']);
-	$('.placename').html(ctour.sites[sn]['placename']);
-	$('.placerelation').html(ctour.sites[sn]['placerelation']);
-	var description = ctour.sites[sn]['description'].replace('. ','. <br>') + ctour.getsupplementals(sn); 
-	$('.description').html(description); 
-	$('.slidenav').html(prevlink+nextlink);
-	coords = ctour.getcoords(sn);
-	$('iframe#map').attr('src', 'http://www.openstreetmap.org/export/embed.html?bbox='+(coords[1] - .001)+'%2C'+(coords[0] - .001)+'%2C'+(coords[1] + .001)+'%2C'+(coords[0] + .001)+'&amp;layer=mapnik&marker='+coords[0]+'%2C'+coords[1] );
-	//console.log('all done.');
-}
-window.ctour.getcoords = function(sn){
-	ctour = window.ctour;
-	coordstring = ctour.sites[sn]['coords'];
-	coords = coordstring.split('-76');
-	coords[1] = parseFloat('-76'+coords[1].trim());
-	coords[0] = parseFloat(coords[0].trim());
-	return(coords);
-}
-window.ctour.testhash = function(){
-		//console.log('testing hash ...');
-		cleanhash = parseInt(window.location.hash.replace('#','')) - 1;
-		//console.log('Hash is ...');
-		//console.log(cleanhash);
-		//console.log('Type of our attempted object should be "object" and is ... ');
-		if(typeof($(ctour.sites)[(cleanhash)]) == 'object'){
-			ctour.showslide(cleanhash);  
-		}else{
-			ctour.showslide(0);	
-	}
-}
-$(function(){
-	//ctour.init();
-	//window.ctour.testhash();
-	$.when(ctour.init()).then(function(){
-		setTimeout(function(){
-			window.ctour.testhash();
-		},500);
-	});
-});
-
-</script>
+<script src="tour.js"></script>
 
 <svg style="height:1px;">
 <defs>
@@ -129,154 +46,22 @@ $(function(){
 	</filter>
 	</defs>
 </svg>
-
-<link rel="stylesheet" type="text/css" href="bower_components/fancybox/source/jquery.fancybox.css">
-<link rel="stylesheet" type="text/css" href="fancyplayer.css">
 <style>
-html {
-	overflow:hidden;
-}
-body {
-	height:110%;
-	width:100%;
-	background-color:#cccccc;
-	position:absolute;
-	bottom:0px;
-	margin:0px;
-	overflow:hidden;
-}
-h2{
-	font-family:sans-serif; 
-	text-transform:uppercase; 
-	font-size:300px; 
-	line-height:180px; 
-	position:relative; 
-	top:0px; 
-	left:0px;
-	color:#ffffff; 
-	opacity:.1;
-	transform: rotate(270deg);
-	height:1px;
-	width:1px;
-	overflow:visible;
-}
-h1{
-	font-family:sans-serif; 
-	text-transform:uppercase; 
-	position:absolute;
-	top:60px;
-	font-size:6vw; 
-	line-height:70px; 
-	color:#ffffff; 
-	opacity:.8;
-	height:1px;
-	width:1px;
-	overflow:visible;
-}
-picture{
-	height:1px;
-	width:1px; 
-	overflow:visible;
-}
-.placename, .placerelation{
-    min-height:45px;
-}
-article{
-	position:absolute;
-	bottom:0px;
-	right:0px;
-	width:45vw;
-	padding:30px;
-	background:#ffffff;
-	min-height:60vh;
-}
-section.slidenav{
-	margin-top:20px;
-	margin-right:20px;
-	float:right;
-}
-section.slidenav span{
-	/*This is a grayed-out nav option.*/
-	color:#cccccc;
-}
-iframe#map{
-	border:1px #cccccc solid;
-	float:right;
-}
-.description{
-    height:200px;
-    overflow-y:auto; 
-}
-section#map iframe{
-	height:185px;
-	width:185px;
-}
+/*Reminder: This only works as a local style.*/
 img.filterme{
 	min-height: 110vh;
 	min-width: 110vw;
 	filter: url('#bluetint');
 	-webkit-filter: url(#bluetint);
 }
-@media (max-width: 800px){
-html {
-	overflow:auto;
-	width:100vw;
-}
-body {
-	height:100%;
-	width:100%;
-	background-color:#ffffff;
-	position:auto;
-	bottom:auto;
-	margin:auto;
-	overflow:auto;
-	overflow-x:hidden;
-}
- article {
-	width:100%;
-	left:0px;
-	top:0px;
-	position:absolute;
-	padding:50px;
-	height:auto;
- }
- section{
-	max-width:85%; 
-	margin-right:100px;
- }
- section#placerelation{
-	border-bottom:1px dotted #cccccc;
-	margin-bottom:30px;
- }
- section.slidenav{
-	float:left; 
-	margin-bottom:60px;
- }
- section.description{
-	height:auto;
-	background:#ffffff;
- }
- section#map{
-	 position: relative;
-	 top: -50px;
-	 left: -50px;
-	 width: 100vw;
-	 height: 185px;
-	 clear: both;
-	 display: block; 
-	 max-width:unset;
- }
- section#map iframe{
-	 height: 180px;
-	 width: 100vw;
-	 overflow: auto; 
- }
- picture{
-	display:none; 
- }
-}
-
 </style>
+
+
+
+<link rel="stylesheet" type="text/css" href="bower_components/fancybox/source/jquery.fancybox.css">
+<link rel="stylesheet" type="text/css" href="fancyplayer.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
 
 </head>
 <body>
@@ -285,7 +70,7 @@ body {
 	</picture>
 	<h1 class="compnameshort">Person name</h1>
 	<h2 class="compnameshort">Person name</h2>
-	<article>
+	<article class="main">
 		<section id="map">
 			<iframe id="map" src="" marginwidth="0" marginheight="0" frameborder="0" scrolling="no"></iframe>
 		</section>
