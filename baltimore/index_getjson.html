@@ -13,7 +13,7 @@ x Also get rid of the logic that subs in background images, since those aren't n
 x Get rid of anything in the "backgrounds" folder other than the crabs.
 x Make the display work on tiny screen sizes.
 x Remove the sn counter from the interface.
-x Fix bug that causes Safari not to load slides.
+- Fix bug that causes Safari not to load slides.
 - Abstract all javascript and styles to their own files.
 - Add a small bit of animation to transition?
 - Add a connection check in the first screen that tells some people "the tour will still work, but some links won't because you're not connected to the Internet."i
@@ -36,11 +36,7 @@ x Fix bug that causes Safari not to load slides.
 window.ctour = {};
 window.ctour.init = function(){
 	ctour = window.ctour;
-	$.ajax({
-	    dataType: "json",
-	    url: "composers.json",
-	    mimeType: "application/json",
-	    success: function(data){
+	$.getJSON("composers.json",function(data){
 		ctour = window.ctour;
 		//window.console.log('The data:');
 		//window.console.log(data);
