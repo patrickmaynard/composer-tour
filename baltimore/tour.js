@@ -32,6 +32,7 @@ window.ctour.getsupplementals = function(sn){
 	return(output);
 }
 window.ctour.showslide = function(slidenumber){
+	$("html, body").animate({ scrollTop: 0 }, "fast");
 	$('.description').hide();
 	ctour = window.ctour;
 	var sn = slidenumber;
