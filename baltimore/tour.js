@@ -32,8 +32,17 @@ window.ctour.getsupplementals = function(sn){
 	return(output);
 }
 window.ctour.showslide = function(slidenumber){
+<<<<<<< Updated upstream
 	$("html, body").animate({ scrollTop: 0 }, "fast");
 	$( ".description" ).hide();
+=======
+<<<<<<< HEAD
+/*	$('.description').hide(); */
+=======
+	$("html, body").animate({ scrollTop: 0 }, "fast");
+	$( ".description" ).hide();
+>>>>>>> origin/gh-pages
+>>>>>>> Stashed changes
 	ctour = window.ctour;
 	var sn = slidenumber;
 	ctour.sites[sn]['compnameshort'] = ctour.sites[sn]['compname'].split(',')[0];
@@ -49,9 +58,23 @@ window.ctour.showslide = function(slidenumber){
 	$('.slidenav').html(prevlink+nextlink);
 	coords = ctour.getcoords(sn);
 	$('iframe#map').attr('src', 'http://www.openstreetmap.org/export/embed.html?bbox='+(coords[1] - .001)+'%2C'+(coords[0] - .001)+'%2C'+(coords[1] + .001)+'%2C'+(coords[0] + .001)+'&amp;layer=mapnik&marker='+coords[0]+'%2C'+coords[1] );
+<<<<<<< Updated upstream
 	$( ".description" ).fadeIn( "slow", function() {
 		// Animation complete.
 	});
+=======
+<<<<<<< HEAD
+/*	  $( ".description" ).fadeIn( "slow", function() {
+			    // Animation complete.
+				});
+*/
+ console.log('all done.');
+=======
+	$( ".description" ).fadeIn( "slow", function() {
+		// Animation complete.
+	});
+>>>>>>> origin/gh-pages
+>>>>>>> Stashed changes
 }
 window.ctour.getcoords = function(sn){
 	ctour = window.ctour;

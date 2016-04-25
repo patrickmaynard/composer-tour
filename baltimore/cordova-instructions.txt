@@ -1,0 +1,32 @@
+
+cordova deploy instructions:
+
+npm install -g cordova 
+
+#^This can be done just the first time — no need to repeat. 
+
+cd ~/Documents/github/composer-tour/
+
+cordova create baltimore-walk
+
+cd baltimore-walk/www
+
+rm -rf ./*
+
+cp -r ../../baltimore/* ./
+
+cordova platform add osx 
+
+cd ..
+
+#Now edit the config.xml file, per http://www.stefangordon.com/renaming-your-cordova-application/
+
+cordova platform remove osx
+
+cordova platform add osx
+
+cordova run osx
+
+
+#When testing a new version, just delete the baltimore-walk project directory and repeat the steps above. 
+
