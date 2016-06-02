@@ -22,6 +22,7 @@ x More cross-browser testing at UB on IE. (This is actually largely redundant, s
 x (The feColorMatrix filter fails in IE, which also has wonky margins at mobile width.)
   (But again, this doesn't matter, because this will all be wrapped by Cordova.)
 - Fix flash-of-black in cordova if possible  
+	(^It turns out that this is caused by the remote map reload. So use screenshots to make this into a local image instead.)
 - Wrap output in a cordova-based wrapper, test some more.
 - Using a bootstrap template, create a super-simple composertours.org site that points users at the app. 
 - Release into the world, distributing simple flyers advertising the tour.
