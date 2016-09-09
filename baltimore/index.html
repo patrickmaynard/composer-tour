@@ -15,6 +15,7 @@ x Get rid of anything in the "backgrounds" folder other than the crabs.
 x Make the display work on tiny screen sizes.
 x Remove the sn counter from the interface.
 x Fix bug that causes Safari not to load slides.
+<<<<<<< HEAD
 x Fix bug that causes Chrome to miss the color filter.
 x Abstract all javascript and styles to their own files.
 x Add a small bit of animation to transition?
@@ -24,6 +25,15 @@ x (The feColorMatrix filter fails in IE, which also has wonky margins at mobile 
   (But again, this doesn't matter, because this will all be wrapped by Cordova.)
 - Fix flash-of-black in cordova if possible  
 	(^It turns out that this is caused by the remote map reload. So use screenshots to make this into a local image instead.)
+=======
+- Abstract all javascript and styles to their own files.
+- Add a small bit of animation to transition?
+- Add a connection check in the first screen that tells some people "the tour will still work, but some links won't because you're not connected to the Internet."i
+- Push this to a github.io site for testing purposes.
+- DO RIDICULOUS AMOUNTS OF CROSS-BROWSER TESTING TO MAKE SURE IT RUNS WELL ON OLD FOLKS' DEVICES. THIS IS CLASSICAL MUSIC, AFTER ALL.
+- WRITE A VERY SIMPLE SERVER-SIDE SCRIPT (MAYBE IN PYTHON OR NODE?) THAT BAKES YOUR CSV TO BOTH A JSON FILE AND A "NOSCRIPT" VERSION OF THE LIST FOR GRACEFUL DEGREDATION.
+- GET RID OF THIS TODO LIST, replacing it with a readme file.
+>>>>>>> master
 - Wrap output in a cordova-based wrapper, test some more.
 - Using a bootstrap template, create a super-simple composertours.org site that points users at the app. 
 - Release into the world, distributing simple flyers advertising the tour.
