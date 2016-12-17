@@ -53,8 +53,10 @@ window.ctour.showslide = function(slidenumber){
 	$('iframe#map').attr('src', 'http://www.openstreetmap.org/export/embed.html?bbox='+(coords[1] - .001)+'%2C'+(coords[0] - .001)+'%2C'+(coords[1] + .001)+'%2C'+(coords[0] + .001)+'&amp;layer=mapnik&marker='+coords[0]+'%2C'+coords[1] );
 	$(".description").animate({ scrollTop: 0 }, "fast");
 	$( ".description" ).fadeIn( "slow", function() {
+		$(".description").animate({ scrollTop: 0 }, "fast");
 		// Animation complete.
 	});
+	$(".description").animate({ scrollTop: 0 }, "fast");
 }
 window.ctour.getcoords = function(sn){
 	ctour = window.ctour;
