@@ -34,6 +34,7 @@ window.ctour.getsupplementals = function(sn){
 window.ctour.showslide = function(slidenumber){
 	$("html, body").animate({ scrollTop: 0 }, "fast");
 	$( ".description" ).hide();
+	$( ".slidenav" ).hide();
 	$("html, body").animate({ scrollTop: 0 }, "fast");
 	$( ".description" ).hide();
 	ctour = window.ctour;
@@ -54,9 +55,9 @@ window.ctour.showslide = function(slidenumber){
 	$(".description").animate({ scrollTop: 0 }, "fast");
 	$( ".description" ).fadeIn( "slow", function() {
 		$(".description").animate({ scrollTop: 0 }, "fast");
+		$( ".slidenav" ).fadeIn("slow");
 		// Animation complete.
 	});
-	$(".description").animate({ scrollTop: 0 }, "fast");
 }
 window.ctour.getcoords = function(sn){
 	ctour = window.ctour;
