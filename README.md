@@ -1,5 +1,5 @@
 # composer-tour
-A tour of composer-related sites
+A tour of composer-related sites, focusing on Baltimore
 
 This tour can be viewed here: 
 
