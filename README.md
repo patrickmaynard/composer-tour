@@ -5,3 +5,4 @@ This tour can be viewed here:
 
 http://patrickmaynard.github.io/composer-tour/baltimore/ 
 
+TODOs: See open issues on github
