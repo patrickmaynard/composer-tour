@@ -69,7 +69,7 @@ iframe#map{
 	float:right;
 }
 .description{
-    height:200px;
+    height:310px;
     overflow-y:auto; 
 }
 section#map iframe{
