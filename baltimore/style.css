@@ -64,6 +64,12 @@ section.slidenav span{
 	/*This is a grayed-out nav option.*/
 	color:#cccccc;
 }
+/* Many, many years after I built this one-off project for a class, the map provider is dead. */
+/* I've moved on to other things and may or may not never significantly update this project again. */
+/* So I just hide the empty map for now. */
+#map {
+	display:none;
+}
 iframe#map{
 	border:1px #cccccc solid;
 	float:right;
